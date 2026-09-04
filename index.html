@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GrowthHub – Objectives & Reviews</title>
+  <style>
+    :root{--bg:#f5f7fb;--panel:#fff;--text:#1f2937;--muted:#6b7280;--line:#e5e7eb;--brand:#729787;--brand2:#eef4f1;--green:#0f9f6e;--amber:#d97706;--red:#dc2626;--shadow:0 10px 30px rgba(17,24,39,.07)}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    button,input,select,textarea{font:inherit} button{cursor:pointer}
+    .app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+    .side{background:#111827;color:#fff;padding:24px 18px;position:sticky;top:0;height:100vh}
+    .logo{display:flex;gap:10px;align-items:center;font-weight:800;font-size:20px;margin-bottom:30px}.logo-badge{width:34px;height:34px;border-radius:10px;background:#729787;display:grid;place-items:center}
+    .nav{display:grid;gap:8px}.nav button{border:0;background:transparent;color:#cbd5e1;text-align:left;padding:11px 12px;border-radius:10px}.nav button.active,.nav button:hover{background:#1f2937;color:#fff}
+    .main{padding:28px 32px 56px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.title h1{margin:0;font-size:28px}.title p{margin:6px 0 0;color:var(--muted)}
+    .avatar{display:flex;align-items:center;gap:10px}.circle{width:38px;height:38px;border-radius:50%;background:#e8efec;color:#4f7565;display:grid;place-items:center;font-weight:700}
+    .grid{display:grid;gap:18px}.stats{grid-template-columns:repeat(4,1fr)}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+    .stat{padding:18px}.stat .k{color:var(--muted);font-size:13px}.stat .v{font-size:28px;font-weight:800;margin:8px 0}.bar{height:8px;background:#eef2f7;border-radius:999px;overflow:hidden}.bar i{display:block;height:100%;background:var(--brand);border-radius:999px}
+    .section{margin-top:24px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.section-head h2{margin:0;font-size:20px}.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:700}.btn.primary{background:var(--brand);color:#fff}.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--text)}
+    .objective-list{display:grid;grid-template-columns:1fr 1fr;gap:16px}.objective{padding:18px}.objective-top{display:flex;justify-content:space-between;gap:12px}.pill{font-size:12px;padding:5px 9px;border-radius:999px;font-weight:700}.ontrack{background:#dcfce7;color:#166534}.done{background:transparent;color:var(--green)}
+    .objective h3{margin:10px 0 6px;font-size:17px}.objective p{margin:0;color:var(--muted);line-height:1.45}.meta{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0;color:#4b5563;font-size:13px}.progress-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}.milestones{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}.ms{display:flex;gap:10px;align-items:flex-start;padding:8px 0}.dot{width:10px;height:10px;border-radius:50%;background:#b9cbc3;margin-top:5px}.ms.done .dot{background:var(--green)}.ms strong{display:block;font-size:13px}.ms span{font-size:12px;color:var(--muted)}
+    .review-grid{grid-template-columns:1.2fr .8fr}.review{padding:18px}.review h3{margin:0 0 6px}.review p{color:var(--muted);line-height:1.55}.quote{background:#f8fafc;border-left:4px solid var(--brand);padding:12px 14px;border-radius:8px;margin-top:12px;color:#374151}
+    .timeline{padding:18px}.titem{display:grid;grid-template-columns:90px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.titem:last-child{border-bottom:0}.date{font-size:12px;color:var(--muted)}
+    .evidence{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.file{border:1px solid var(--line);background:#fafafa;border-radius:9px;padding:7px 10px;font-size:12px}
+    .modal{position:fixed;inset:0;background:rgba(17,24,39,.45);display:none;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.modal-card{width:min(760px,96vw);max-height:90vh;overflow:auto;background:#fff;border-radius:18px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+    .modal-head{display:flex;justify-content:space-between;align-items:center}.modal-head h2{margin:0}.x{border:0;background:#f3f4f6;border-radius:8px;width:34px;height:34px}
+    .form{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}.full{grid-column:1/-1}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff}.field textarea{min-height:90px;resize:vertical}
+    .tabs{display:flex;gap:8px;margin-bottom:18px}.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px}.tab.active{background:var(--brand2);color:#4f7565;border-color:#b9cbc3;font-weight:700}
+    .hidden{display:none}
+    @media(max-width:1000px){.app{grid-template-columns:1fr}.side{height:auto;position:relative}.stats{grid-template-columns:1fr 1fr}.objective-list,.review-grid{grid-template-columns:1fr}}
+    @media(max-width:620px){.main{padding:20px}.stats{grid-template-columns:1fr}.form{grid-template-columns:1fr}.full{grid-column:auto}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="logo"><div class="logo-badge">G</div>GrowthHub</div>
+    <div class="nav">
+      <button class="active" data-view="dashboard">Overview</button>
+      <button data-view="objectives">My objectives</button>
+      <button data-view="reviews">Reviews</button>
+      <button data-view="manager">Manager view</button>
+    </div>
+  </aside>
+  <main class="main">
+    <div class="top">
+      <div class="title"><h1>Performance & Growth</h1><p>See how objectives, milestones, evidence and review summaries connect over time.</p></div>
+      <div class="avatar"><div><b>Alex Morgan</b><div style="font-size:12px;color:#6b7280">Business Analyst</div></div><div class="circle">AM</div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-filter="all">All objectives</button>
+      <button class="tab" data-filter="ontrack">On track</button>
+      <button class="tab" data-filter="done">Completed</button>
+    </div>
+
+    <section id="dashboardView">
+      <div class="grid stats">
+        <div class="card stat"><div class="k">Objectives in cycle</div><div class="v">4</div><div class="bar"><i style="width:72%"></i></div></div>
+        <div class="card stat"><div class="k">Milestones completed</div><div class="v">9 / 13</div><div class="bar"><i style="width:69%"></i></div></div>
+        <div class="card stat"><div class="k">Evidence items</div><div class="v">12</div><div style="color:#6b7280;font-size:13px">Docs, links and notes</div></div>
+        <div class="card stat"><div class="k">Next review</div><div class="v" style="font-size:22px">28 Sep</div><div style="color:#6b7280;font-size:13px">Quarterly review</div></div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><h2>My objectives</h2><button class="btn primary" id="addObjective">+ Add objective</button></div>
+        <div class="objective-list" id="objectiveList"></div>
+      </div>
+
+      <div class="section grid review-grid">
+        <div class="card review">
+          <div class="section-head"><h2>Agent-generated review summary</h2><span class="pill done">Q3 2026</span></div>
+          <h3>What’s going well</h3><p>Strong progress against service quality and automation objectives. Delivery has been consistent, with clear evidence attached to key milestones.</p>
+          <h3>Focus for next quarter</h3><p>Convert pilot learnings into reusable team processes and strengthen measurable business outcomes around time saved and adoption.</p>
+          <div class="quote"><b>Manager note:</b> Alex is demonstrating good ownership. Next step is to make the impact easier for stakeholders to see through clearer metrics.</div>
+        </div>
+        <div class="card timeline">
+          <h2 style="margin-top:0">Review timeline</h2>
+          <div class="titem"><div class="date">14 Jan</div><div><b>1:1 summary</b><div style="font-size:13px;color:#6b7280">Priorities agreed for Q1</div></div></div>
+          <div class="titem"><div class="date">31 Mar</div><div><b>Quarterly review</b><div style="font-size:13px;color:#6b7280">3 objectives on track</div></div></div>
+          <div class="titem"><div class="date">27 Jun</div><div><b>Quarterly review</b><div style="font-size:13px;color:#6b7280">Automation objective added</div></div></div>
+          <div class="titem"><div class="date">28 Sep</div><div><b>Upcoming review</b><div style="font-size:13px;color:#6b7280">Draft summary ready</div></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head"><h2>Create objective</h2><button class="x" id="close">×</button></div>
+    <div class="form">
+      <div class="field full"><label>Objective title</label><input id="gTitle" placeholder="e.g. Improve employee onboarding experience"></div>
+      <div class="field full"><label>Description</label><textarea id="gDesc" placeholder="What does success look like?"></textarea></div>
+      <div class="field"><label>Due date</label><input id="gDue" type="date"></div>
+      <div class="field"><label>Status</label><select id="gStatus"><option value="ontrack">On track</option><option value="done">Completed</option></select></div>
+      <div class="field"><label>Progress %</label><input id="gProgress" type="number" min="0" max="100" value="25"></div>
+      <div class="field"><label>Owner</label><input value="Alex Morgan" disabled></div>
+      <div class="field full"><label>Milestones (one per line)</label><textarea id="gMilestones" placeholder="Draft process map\nPilot with 10 users\nPublish final guidance"></textarea></div>
+      <div class="field full"><label>Evidence / supporting documents</label><input id="gEvidence" placeholder="e.g. pilot-results.pdf, stakeholder-feedback.docx"></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px"><button class="btn ghost" id="cancel">Cancel</button><button class="btn primary" id="save">Create objective</button></div>
+  </div>
+</div>
+
+<script>
+const objectives=[
+ {id:1,title:'Copilot Agent Security Implementation',desc:'Implement the agreed security controls and governance approach for the Copilot agent, covering access, data handling, testing and production readiness.',due:'31 Dec 2026',status:'ontrack',progress:68,evidence:['Copilot-security-design.docx','Security-test-results.xlsx'],milestones:[['Define security requirements and access model','done'],['Configure data access and permission controls','done'],['Complete security and risk testing','todo'],['Document production governance and handover','todo']]},
+ {id:2,title:'BA certification - Coursera',desc:'Complete the selected Coursera Business Analysis certification and apply the learning to day-to-day requirements, process and stakeholder analysis work.',due:'30 Nov 2026',status:'ontrack',progress:55,evidence:['Coursera-course-progress.pdf'],milestones:[['Complete core Business Analysis modules','done'],['Finish requirements and process modelling modules','todo'],['Complete final assessment and certification','todo'],['Share key learning with the team','todo']]},
+ {id:3,title:'Presentation Skills',desc:'Strengthen presentation structure, storytelling and delivery to communicate analysis and recommendations clearly to stakeholders.',due:'31 Dec 2026',status:'ontrack',progress:45,evidence:['Presentation-feedback.docx'],milestones:[['Complete presentation skills training','done'],['Prepare and deliver a team presentation','todo'],['Collect stakeholder feedback','todo'],['Apply feedback in a senior stakeholder presentation','todo']]},
+ {id:4,title:'Bonus Matrix Process Improvement',desc:'Review and improve the Bonus Matrix process to reduce manual effort, clarify ownership and create a more consistent and efficient workflow.',due:'31 Oct 2026',status:'ontrack',progress:72,evidence:['Bonus-current-process.xlsx','Process-improvement-proposal.pptx'],milestones:[['Map the current Bonus Matrix process','done'],['Identify pain points and improvement opportunities','done'],['Design the improved process and ownership model','todo'],['Pilot the revised process and capture feedback','todo']]}
+];
+const labels={ontrack:'On track',done:'Completed'};
+function render(filter='all'){
+ const list=document.getElementById('objectiveList');list.innerHTML='';
+ objectives.filter(g=>filter==='all'||g.status===filter).forEach(g=>{
+ const el=document.createElement('article');el.className='card objective';
+ el.innerHTML=`<div class="objective-top"><div><span class="pill ${g.status}">${labels[g.status]}</span><h3>${g.title}</h3></div><button class="btn ghost" onclick="alert('Prototype: open objective detail')">View</button></div>
+ <p>${g.desc}</p><div class="meta"><span>Due ${g.due}</span><span>${g.evidence.length} evidence items</span></div>
+ <div class="progress-row"><b>Progress</b><span>${g.progress}%</span></div><div class="bar"><i style="width:${g.progress}%"></i></div>
+ <div class="milestones">${g.milestones.map(m=>`<div class="ms ${m[1]}"><div class="dot"></div><div><strong>${m[0]}</strong><span>${m[1]==='done'?'Completed':'Open milestone'}</span></div></div>`).join('')}</div>
+ <div class="evidence">${g.evidence.map(f=>`<span class="file">📎 ${f}</span>`).join('')}</div>`;
+ list.appendChild(el);
+ })
+}
+render();
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');render(b.dataset.filter)});
+const modal=document.getElementById('modal');
+document.getElementById('addObjective').onclick=()=>modal.classList.add('open');
+['close','cancel'].forEach(id=>document.getElementById(id).onclick=()=>modal.classList.remove('open'));
+document.getElementById('save').onclick=()=>{
+ const title=document.getElementById('gTitle').value.trim(); if(!title){alert('Please enter a objective title');return}
+ const status=document.getElementById('gStatus').value;
+ const ms=document.getElementById('gMilestones').value.split('\n').map(x=>x.trim()).filter(Boolean).map(x=>[x,'todo']);
+ const ev=document.getElementById('gEvidence').value.split(',').map(x=>x.trim()).filter(Boolean);
+ objectives.unshift({id:Date.now(),title,desc:document.getElementById('gDesc').value||'No description yet.',due:document.getElementById('gDue').value||'No date',status,progress:Number(document.getElementById('gProgress').value||0),evidence:ev,milestones:ms});
+ modal.classList.remove('open');render(document.querySelector('.tab.active').dataset.filter);document.getElementById('gTitle').value='';
+};
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');alert('Prototype navigation: '+b.textContent)});
+</script>
+</body>
+</html>
